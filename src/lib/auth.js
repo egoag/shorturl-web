@@ -16,7 +16,7 @@ const AuthHeaders = () => {
     const now = Dayjs()
     const expiresAt = Dayjs(tokenExpiresAt)
     if (expiresAt.isAfter(now)) {
-      headers['authorization'] = `Bearer ${token}`
+      headers.authorization = `Bearer ${token}`
     }
   }
 

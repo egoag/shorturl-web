@@ -3,7 +3,7 @@ import resolvers from './resolvers'
 import { cache, data } from './cache'
 import { AuthHeaders } from '../lib/auth'
 
-const SERVER = 'https://api.shorturl.henshin.me/graphql'
+const SERVER = process.env.REACT_APP_SERVER_URI
 
 const client = new ApolloClient({
   uri: SERVER,
