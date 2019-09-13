@@ -80,31 +80,27 @@ const UrlVersions = ({ id }) => {
   )
 }
 
-const Url = ({ url: { id, url: origUrl, latest: origLatest } }) => {
-  const [url, updateNewUrl] = useState(origUrl)
+const Url = ({ url: { id, url, latest } }) => {
+  const [newUrl, updateNewUrl] = useState(url)
   const [isVersion, toggleVersion] = useState(false)
   const [isModifying, setIsModifying] = useState(false)
-  const [updateUrl, { loading, error, data: { url: newUrl, latest: newLatest } = {} }] = useMutation(UPDATE_URL, { variables: { id } })
+  const [updateUrl, { loading, error }] = useMutation(UPDATE_URL, { variables: { id } })
 
   if (error) {
     console.log('update error', error)
   }
-  if (newUrl && newLatest) {
-    updateNewUrl(newUrl)
-  }
 
-  const latest = newLatest || origLatest
   const domain = GetDomain(url)
   const updateModify = () => {
     setIsModifying(!isModifying)
-    updateUrl({ variables: { url: url } })
+    updateUrl({ variables: { url: newUrl } })
   }
   const toggleModify = () => {
     setIsModifying(!isModifying)
   }
   const cancelModify = () => {
     setIsModifying(!isModifying)
-    updateNewUrl(origUrl)
+    updateNewUrl(url)
   }
 
   return (
@@ -117,7 +113,7 @@ const Url = ({ url: { id, url: origUrl, latest: origLatest } }) => {
                 {id}
               </Link>
               {isModifying
-                ? <input className="url-modify" onChange={e => updateNewUrl(e.target.value)} value={url} disabled={loading} ></input>
+                ? <input className="url-modify" onChange={e => updateNewUrl(e.target.value)} value={newUrl} disabled={loading} ></input>
                 : <span className="url-title" title={url}>({domain})</span> }
             </span>
             : <span>{id}</span>

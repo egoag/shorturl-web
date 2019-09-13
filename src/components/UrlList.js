@@ -8,6 +8,7 @@ import Error from './Error'
 const MY_URLS = gql`
   query getMyUrls($limit: Int, $lastKey: String){
     getMyUrls(limit: $limit, lastKey: $lastKey){
+      id
       count
       lastKey
       items {
